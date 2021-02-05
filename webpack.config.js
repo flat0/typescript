@@ -22,9 +22,13 @@ module.exports = {
 		,key: fs.readFileSync('C:/server/cert/.key')
 		,port: 2212 // 2021-02-02 https://webpack.js.org/configuration/dev-server#devserverport
 	}
-	,devtool: 'inline-source-map' // 2021-02-01 https://webpack.js.org/guides/development
-	,entry: {index: './src/index.js'}
+	// 2021-02-01 https://webpack.js.org/guides/development
+	// 2021-02-06 https://webpack.js.org/guides/typescript#source-maps
+	,devtool: 'inline-source-map'
+	,entry: {index: './src/index.ts'} // 2021-02-06 https://webpack.js.org/guides/typescript#basic-setup
 	,mode: 'development' // 2021-02-01 https://webpack.js.org/guides/development
+	// 2021-02-06 https://webpack.js.org/guides/typescript#basic-setup
+	,module: {rules: [{exclude: /node_modules/, test: /\.tsx?$/, use: 'ts-loader'}]}
 	// 2021-02-03 https://webpack.js.org/guides/caching#extracting-boilerplate
 	,optimization: {
 		// 2021-02-03
@@ -58,11 +62,7 @@ module.exports = {
 		}
 	}
 	,output: {
-		// 2021-02-03
-		// «The `[contenthash]` substitution will add a unique hash based on the content of an asset.
-		// When the asset's content changes, `[contenthash]` will change as well.»
-		// https://webpack.js.org/guides/caching#output-filenames
-		filename: '[name].[contenthash].js'
+		filename: 'bundle.js' // 2021-02-06 https://webpack.js.org/guides/typescript#basic-setup
 		,path: path.resolve(__dirname, 'dist')
 		,publicPath: '/' // 2021-02-03 https://webpack.js.org/guides/development#using-webpack-dev-middleware
 	}
@@ -81,4 +81,6 @@ module.exports = {
 			title: 'Caching' // 2021-02-03 https://webpack.js.org/guides/caching#output-filenames
 		})
 	]
+	// 2021-02-06 https://webpack.js.org/guides/typescript#basic-setup
+	,resolve: {extensions: ['.tsx', '.ts', '.js']}
 };
